@@ -1,4 +1,4 @@
-import Gray BulkLogo from "./Gray BulkLogo";
+import Logo from "./Logo";
 import Link from "next/link";
 
 export default function Footer() {
@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 lg:px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <Gray BulkLogo className="w-12 h-12 animate-fadeIn delay-0" />
+          <Logo className="h-10 w-auto" />
             <h3 className="font-semibold text-lg mb-1.5 mt-4">Gray Bulk</h3>
             <p className="text-muted-foreground text-sm">
               Perfect Combination of Scanning, Customer Experience and Knowledge
