@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import Logo from "@/components/Logo";
 
 type WhoAmI =
   | { authenticated: false }
@@ -78,13 +79,9 @@ export function Navbar() {
       <div className="flex h-14 items-center justify-between max-w-7xl mx-auto px-4 lg:px-6">
         <div className="flex items-center gap-6">
           <Link href="/" className="font-normal flex items-center gap-4">
-            <img
-              src="/logo.svg"
-              alt="Coldran"
-              draggable={false}
-              width={50}
-              height={50}
-            />
+
+          
+          <Logo className="h-7 w-auto" />
           </Link>
           <nav className="hidden font-medium text-lg md:flex pl-3 gap-1">
             <Link

@@ -69,7 +69,7 @@ export default function Home() {
             <div className="flex relative mt-10 flex-col max:smml-4 ">
               <div>
                 <a href="https://app.coldran.com" target="_blank">
-                  <Button variant="primary" size="lg" className="">
+                  <Button variant="primary" size="sm">
                     Get started
                   </Button>
                 </a>
