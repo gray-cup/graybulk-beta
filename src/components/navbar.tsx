@@ -54,7 +54,7 @@ export function Navbar() {
 
     const ctrl = new AbortController();
 
-    fetch("https://app.coldran.com/api/whoami", {
+    fetch("https://app.graybulk.com/api/whoami", {
       method: "GET",
       credentials: "include",
       signal: ctrl.signal,
@@ -81,7 +81,8 @@ export function Navbar() {
           <Link href="/" className="font-normal flex items-center gap-4">
 
           
-          <Logo className="h-7 w-auto" />
+          <Logo className="h-10 w-auto" />
+          <h1 className="font-semibold text-2xl text-[#0A0B0D]">Gray Bulk</h1>
           </Link>
           <nav className="hidden font-medium text-lg md:flex pl-3 gap-1">
             <Link
@@ -91,7 +92,7 @@ export function Navbar() {
               Pricing
             </Link>
             <a
-              href="https://docs.coldran.com"
+              href="https://docs.graybulk.com"
               target="_blank"
               className="circular rounded-md px-3 py-2 text-neutral-800"
             >
@@ -117,7 +118,7 @@ export function Navbar() {
               Loading…
             </Button>
           ) : showDashboardCTA ? (
-            <a href="https://app.coldran.com">
+            <a href="https://app.graybulk.com">
               <Button variant="black" size="minor">
                 Dashboard
               </Button>
@@ -133,7 +134,7 @@ export function Navbar() {
 
               {/* Sign-in always visible outside the app */}
               <a
-                href="https://app.coldran.com/"
+                href="https://app.graybulk.com/"
                 target="_blank"
                 rel="dofollow noopener"
                 id="sign-in-link"

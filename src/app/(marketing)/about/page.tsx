@@ -101,7 +101,7 @@ export default function AboutPage() {
       <hr className="my-14 border-neutral-200" />
 
       <div className="flex flex-col sm:flex-row gap-4">
-        <a href="https://app.coldran.com" target="_blank">
+        <a href="https://app.graybulk.com" target="_blank">
           <Button variant="primary" size="lg">
             Get started
           </Button>
