@@ -251,3 +251,7 @@ iframe {
 textarea {
   resize: none;
 }
+
+input[type="range"] {
+  accent-color: #0052FF;
+}

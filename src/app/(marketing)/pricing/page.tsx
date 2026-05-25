@@ -239,6 +239,18 @@ export default function PricingPage() {
   const [cardCalcOpen, setCardCalcOpen] = useState(false);
   const [cardAmount, setCardAmount] = useState(10000);
   const [cardType, setCardType] = useState("Credit card (Mastercard/Visa/Rupay/Diners)");
+  const [cardTypeOpen, setCardTypeOpen] = useState(false);
+  const cardTypeRef = useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (cardTypeRef.current && !cardTypeRef.current.contains(e.target as Node)) {
+        setCardTypeOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const cardRates: { label: string; rate: string; logos?: React.ReactNode }[] = [
     {
@@ -387,36 +399,43 @@ export default function PricingPage() {
                   </Button>
                 </div>
                 <Separator className="my-3" />
-                <div className="flex flex-col divide-y divide-gray-100">
-                  {cardRates.map(({ label, rate, logos }) => (
-                    <div key={label} className="flex items-center justify-between py-3 text-sm gap-4">
-                      <div className="flex flex-col gap-1.5">
-                        <span className="text-muted-foreground">{label}</span>
-                        {logos && <div>{logos}</div>}
-                      </div>
-                      <span className="font-semibold tabular-nums shrink-0">{rate}</span>
-                    </div>
-                  ))}
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">* Exclusive of GST</p>
                 <div
-                  className="grid transition-all duration-500 ease-in-out"
+                  className="grid transition-all duration-700 ease-in-out"
                   style={{ gridTemplateRows: cardCalcOpen ? "1fr" : "0fr" }}
                 >
                   <div className="overflow-hidden">
-                    <Separator className="mt-4" />
-                    <div className="flex flex-col gap-3 pt-4">
+                    <div className="flex flex-col gap-3 pb-4">
                       <div className="flex flex-col gap-1.5">
                         <span className="text-sm text-muted-foreground">Card type</span>
-                        <select
-                          value={cardType}
-                          onChange={(e) => setCardType(e.target.value)}
-                          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300"
-                        >
-                          {cardRates.map(({ label }) => (
-                            <option key={label} value={label}>{label}</option>
-                          ))}
-                        </select>
+                        <div ref={cardTypeRef} className="relative">
+                          <button
+                            type="button"
+                            onClick={() => setCardTypeOpen((v) => !v)}
+                            className="w-full flex items-center justify-between rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-left focus:outline-none focus:ring-2 focus:ring-gray-300"
+                          >
+                            <span>{cardType}</span>
+                            <svg
+                              className={`size-4 shrink-0 text-muted-foreground transition-transform duration-200 ${cardTypeOpen ? "rotate-180" : ""}`}
+                              viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                            >
+                              <path d="m6 9 6 6 6-6" />
+                            </svg>
+                          </button>
+                          {cardTypeOpen && (
+                            <div className="absolute z-10 mt-1 w-full rounded-lg border border-gray-200 bg-white shadow-md overflow-hidden">
+                              {cardRates.map(({ label }) => (
+                                <button
+                                  key={label}
+                                  type="button"
+                                  onClick={() => { setCardType(label); setCardTypeOpen(false); }}
+                                  className={`w-full px-3 py-2 text-sm text-left hover:bg-gray-50 transition-colors ${cardType === label ? "bg-gray-100 font-medium" : ""}`}
+                                >
+                                  {label}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Transaction value</span>
@@ -429,7 +448,7 @@ export default function PricingPage() {
                         step={1000}
                         value={cardAmount}
                         onChange={(e) => setCardAmount(Number(e.target.value))}
-                        className="w-full accent-black"
+                        className="w-full"
                       />
                       <div className="flex items-center justify-between text-xs text-muted-foreground">
                         <span>₹1,000</span>
@@ -448,8 +467,21 @@ export default function PricingPage() {
                         </span>
                       </div>
                     </div>
+                    <Separator className="mb-3" />
                   </div>
                 </div>
+                <div className="flex flex-col divide-y divide-gray-100">
+                  {cardRates.map(({ label, rate, logos }) => (
+                    <div key={label} className="flex items-center justify-between py-3 text-sm gap-4">
+                      <div className="flex flex-col gap-1.5">
+                        <span className="text-muted-foreground">{label}</span>
+                        {logos && <div>{logos}</div>}
+                      </div>
+                      <span className="font-semibold tabular-nums shrink-0">{rate}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">* Exclusive of GST</p>
               </Card>
             ) : (
               <>
@@ -484,7 +516,7 @@ export default function PricingPage() {
                       step={1000}
                       value={upiAmount}
                       onChange={(e) => setUpiAmount(Number(e.target.value))}
-                      className="w-full accent-black"
+                      className="w-full"
                     />
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
                       <span>₹1,000</span>
@@ -533,7 +565,7 @@ export default function PricingPage() {
                       step={100000}
                       value={netAmount}
                       onChange={(e) => setNetAmount(Number(e.target.value))}
-                      className="w-full accent-black"
+                      className="w-full"
                     />
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
                       <span>₹1,00,000</span>
