@@ -96,6 +96,11 @@ export default function Footer() {
                   Seller Agreement
                 </Link>
               </li>
+              <li>
+                <Link href="/shipping-returns" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Shipping &amp; Returns
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
@@ -103,13 +108,14 @@ export default function Footer() {
             <BankIcon size={32} weight="duotone" color="#0433ff" />
               <h4 className="font-semibold italic text-[#0433ff] text-lg">NEFT/RTGS</h4>
             </div>
-            <div className="flex flex-wrap gap-3 items-center">
-              <UPILogo className="h-8 w-auto" />
-              <RupayLogo className="h-8 w-auto" />
-              <VisaLogo className="h-15 w-auto" />
-              <MastercardLogo className="h-15 w-auto" />
-              <AmexLogo className="h-15 w-auto" />
+            <div className="flex flex-wrap gap-2 items-center">
+              <UPILogo className="h-5 w-auto" />
+              <RupayLogo className="h-5 w-auto" />
             </div>
+            <div className="flex flex-wrap pt-2.5 gap-2 items-center">              <VisaLogo className="h-12 w-auto" />
+              <MastercardLogo className="h-12 w-auto" />
+              <AmexLogo className="h-12 w-auto" />
+</div>
           </div>
         </div>
         <div className="mt-10 pt-6 border-t border-border text-center text-sm text-muted-foreground">

@@ -5,6 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/Logo";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown } from "lucide-react";
 
 type WhoAmI =
   | { authenticated: false }
@@ -79,12 +86,16 @@ export function Navbar() {
       <div className="flex h-14 items-center justify-between max-w-7xl mx-auto px-4 lg:px-6">
         <div className="flex items-center gap-6">
           <Link href="/" className="font-normal flex items-center gap-4">
-
-          
-          <Logo className="h-10 w-auto" />
-          <h1 className="font-semibold text-2xl text-primary">Gray Bulk</h1>
+            <Logo className="h-10 w-auto" />
+            <h1 className="font-semibold text-2xl text-primary">Gray Bulk</h1>
           </Link>
-          <nav className="hidden font-medium text-lg md:flex pl-3 gap-1">
+          <nav className="hidden font-medium text-lg md:flex pl-3 gap-1 items-center">
+            <Link
+              href="/categories"
+              className="circular rounded-md px-3 py-2 text-neutral-800"
+            >
+              Categories
+            </Link>
             <Link
               href="/pricing"
               className="circular rounded-md px-3 py-2 text-neutral-800"
@@ -104,6 +115,32 @@ export function Navbar() {
             >
               About
             </Link>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="circular rounded-md px-3 py-2 text-neutral-800 flex items-center gap-1 hover:bg-neutral-100 transition-colors focus:outline-none">
+                  Legal
+                  <ChevronDown className="h-4 w-4 text-neutral-500" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-52">
+                <DropdownMenuItem asChild>
+                  <Link href="/seller-agreement" className="cursor-pointer">
+                    Seller Agreement
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/privacy" className="cursor-pointer">
+                    Privacy Policy
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/shipping-returns" className="cursor-pointer">
+                    Shipping &amp; Returns
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
         </div>
 

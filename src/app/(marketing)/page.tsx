@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
 
 import {
   CreateAgent,
@@ -18,6 +20,7 @@ import {
 import { CurrencyCircleDollarIcon, StorefrontIcon, ListBulletsIcon, TagIcon } from "@phosphor-icons/react";
 import { AnimatedHeroGrid } from "@/components/hero-grid/HeroGrid";
 import { TwoColLayout, FourCardGrid, Section } from "@/components/layouts";
+import { categories } from "@/lib/categories";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -72,6 +75,32 @@ export default function Home() {
             </div>
           }
         />
+
+        <Section>
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold text-neutral-900 mb-1">Browse by Category</h2>
+            <p className="text-muted-foreground">Discover wholesale products across India's key industries.</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {categories.map((cat) => (
+              <Link key={cat.slug} href={`/categories/${cat.slug}`} className="group rounded-2xl overflow-hidden border border-gray-200 bg-white hover:shadow-md transition-shadow">
+                <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-100">
+                  <Image
+                    src={cat.image}
+                    alt={cat.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                  />
+                </div>
+                <div className="p-4">
+                  <p className="font-medium text-neutral-800">{cat.name}</p>
+                  <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{cat.description}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </Section>
 
         <Section>
           <FourCardGrid
