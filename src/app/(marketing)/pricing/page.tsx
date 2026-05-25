@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,20 +14,24 @@ import { Separator } from "@/components/ui/separator";
 
 type Tier = {
   name: string;
-  price: string;
+  monthlyPrice: string;
+  yearlyPrice?: string;
   cta: string;
   ctaVariant?: "default" | "primary" | "secondary";
   features: string[];
   flagText?: string;
+  hasBilling?: boolean;
 };
 
 /* ---------- Single borderless plan column ---------- */
 function PricingCard({
   tier,
   columnRef,
+  billing,
 }: {
   tier: Tier;
   columnRef?: React.RefObject<HTMLDivElement | null>;
+  billing: "monthly" | "yearly";
 }) {
   return (
     <div ref={columnRef} className="relative">
@@ -42,12 +46,14 @@ function PricingCard({
               <div className="mb-6 flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                   <span className="text-4xl leading-none tracking-[-0.15rem] tabular-nums">
-                    {tier.price}
+                    {billing === "yearly" && tier.yearlyPrice ? tier.yearlyPrice : tier.monthlyPrice}
                   </span>
                 </div>
-                <CardDescription className="text-xs text-muted-foreground">
-                  per month, billed annually
-                </CardDescription>
+                {tier.hasBilling && (
+                  <CardDescription className="text-xs text-muted-foreground">
+                    {billing === "yearly" ? "per year · 2 months free" : "per month"}
+                  </CardDescription>
+                )}
               </div>
               <Button
                 className="w-full h-12 rounded-lg"
@@ -85,7 +91,7 @@ function PricingCard({
 const tiers: Tier[] = [
   {
     name: "Free",
-    price: "₹0",
+    monthlyPrice: "₹0",
     cta: "Get Started",
     ctaVariant: "default",
     features: [
@@ -98,9 +104,11 @@ const tiers: Tier[] = [
   },
   {
     name: "Growth",
-    price: "₹1,250",
+    monthlyPrice: "₹1,250",
+    yearlyPrice: "₹12,500",
     cta: "Start Selling",
     ctaVariant: "primary",
+    hasBilling: true,
     features: [
       "Up to 30 product listings",
       "Expanded catalog visibility",
@@ -112,9 +120,11 @@ const tiers: Tier[] = [
   },
   {
     name: "Enterprise",
-    price: "₹3,750",
+    monthlyPrice: "₹3,750",
+    yearlyPrice: "₹37,500",
     cta: "Build at Scale",
     ctaVariant: "primary",
+    hasBilling: true,
     features: [
       "Up to 100 product listings",
       "Large catalog management",
@@ -124,23 +134,12 @@ const tiers: Tier[] = [
       "Priority support",
     ],
   },
-  {
-    name: "Transaction Fees",
-    price: "0.4%",
-    cta: "View Docs",
-    ctaVariant: "default",
-    features: [
-      "0.4% platform fee on UPI transactions",
-      "₹230 flat fee on net banking transactions",
-      "No hidden charges",
-      "Settlements processed automatically",
-    ],
-  },
 ];
 
 /* ---------- Page ---------- */
 export default function PricingPage() {
   const frameRef = useRef<HTMLDivElement | null>(null);
+  const [billing, setBilling] = useState<"monthly" | "yearly">("yearly");
 
   return (
     <div className="min-h-screen py-20">
@@ -260,6 +259,32 @@ export default function PricingPage() {
         </div>
 
         <div className="max-w-6xl mx-auto mt-10">
+          {/* Billing toggle */}
+          <div className="flex justify-center mb-6">
+            <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 gap-1">
+              <button
+                onClick={() => setBilling("monthly")}
+                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  billing === "monthly"
+                    ? "bg-gray-100 text-black"
+                    : "text-muted-foreground hover:text-black"
+                }`}
+              >
+                Monthly
+              </button>
+              <button
+                onClick={() => setBilling("yearly")}
+                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  billing === "yearly"
+                    ? "bg-gray-100 text-black"
+                    : "text-muted-foreground hover:text-black"
+                }`}
+              >
+                Yearly
+              </button>
+            </div>
+          </div>
+
           {/* Wrapper must be relative so overlay positions correctly */}
           <div className="relative">
             {/* Framed container can be overflow-hidden now; corners stay clean */}
@@ -267,11 +292,11 @@ export default function PricingPage() {
               ref={frameRef}
               className="rounded-2xl max-md:max-w-sm max-md:mx-auto border border-gray-200 bg-white overflow-hidden"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-x divide-gray-200">
+              <div className="grid grid-cols-1 md:grid-cols-3 divide-x divide-gray-200">
                 {tiers.map((t) => {
                   return (
                     <div key={t.name} className="relative">
-                      <PricingCard tier={t} />
+                      <PricingCard tier={t} billing={billing} />
                     </div>
                   );
                 })}
@@ -279,6 +304,29 @@ export default function PricingPage() {
             </div>
           </div>
           {/* end wrapper */}
+        </div>
+
+        {/* Settlements section */}
+        <div className="max-w-6xl mx-auto mt-16">
+          <h2 className="text-2xl font-semibold text-black mb-6">Settlements</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card className="p-6 border border-gray-200 rounded-2xl bg-white">
+              <div className="flex flex-col gap-2">
+                <span className="text-3xl font-semibold tracking-[-0.1rem] tabular-nums">0.4%</span>
+                <CardDescription className="text-xs text-muted-foreground">of UPI transaction value</CardDescription>
+              </div>
+              <Separator className="my-6" />
+              <p className="text-sm text-muted-foreground">Platform fee applied on all UPI-based payments. Settlements processed automatically with no hidden charges.</p>
+            </Card>
+            <Card className="p-6 border border-gray-200 rounded-2xl bg-white">
+              <div className="flex flex-col gap-2">
+                <span className="text-3xl font-semibold tracking-[-0.1rem] tabular-nums">₹230</span>
+                <CardDescription className="text-xs text-muted-foreground">flat fee on net banking transactions</CardDescription>
+              </div>
+              <Separator className="my-6" />
+              <p className="text-sm text-muted-foreground">Fixed flat fee per net banking transaction. Settlements processed automatically with no hidden charges.</p>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
