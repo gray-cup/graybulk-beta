@@ -95,12 +95,14 @@ function PricingCard({
 
 const tiers: Tier[] = [
   {
-    name: "Free",
-    monthlyPrice: "₹0",
+    name: "Starter",
+    monthlyPrice: "₹1,250",
+    yearlyPrice: "₹12,500",
     cta: "Get Started",
     ctaVariant: "default",
+    hasBilling: true,
     features: [
-      "Up to 5 product listings",
+      "Up to 50 product listings",
       "Basic supplier profile",
       "Marketplace visibility",
       "Receive buyer inquiries",
@@ -109,13 +111,13 @@ const tiers: Tier[] = [
   },
   {
     name: "Growth",
-    monthlyPrice: "₹1,250",
-    yearlyPrice: "₹12,500",
+    monthlyPrice: "₹3,750",
+    yearlyPrice: "₹37,500",
     cta: "Start Selling",
     ctaVariant: "primary",
     hasBilling: true,
     features: [
-      "Up to 30 product listings",
+      "Up to 100 product listings",
       "Expanded catalog visibility",
       "Enhanced supplier presence",
       "Scalable storefront",
@@ -125,13 +127,13 @@ const tiers: Tier[] = [
   },
   {
     name: "Enterprise",
-    monthlyPrice: "₹3,750",
-    yearlyPrice: "₹37,500",
-    cta: "Build at Scale",
+    monthlyPrice: "₹6,700",
+    yearlyPrice: "₹67,000",
+    cta: "Start Selling",
     ctaVariant: "primary",
     hasBilling: true,
     features: [
-      "Up to 100 product listings",
+      "Up to 300 product listings",
       "Large catalog management",
       "Enterprise supplier presence",
       "High-volume selling capability",
@@ -153,13 +155,28 @@ const tiers: Tier[] = [
     ],
   },
   {
-    name: "Lifetime",
+    name: "Starter Lifetime",
+    monthlyPrice: "₹30,000",
+    cta: "Get Lifetime Access",
+    ctaVariant: "default",
+    isLifetime: true,
+    features: [
+      "Up to 50 product listings",
+      "Basic supplier profile",
+      "Marketplace visibility",
+      "Receive buyer inquiries",
+      "Automated payment settlements",
+      "Lifetime updates",
+    ],
+  },
+  {
+    name: "Growth Lifetime",
     monthlyPrice: "₹80,000",
     cta: "Get Lifetime Access",
     ctaVariant: "primary",
     isLifetime: true,
     features: [
-      "Up to 30 product listings",
+      "Up to 100 product listings",
       "Expanded catalog visibility",
       "Enhanced supplier presence",
       "Scalable storefront",
@@ -175,12 +192,27 @@ const tiers: Tier[] = [
     ctaVariant: "primary",
     isLifetime: true,
     features: [
-      "Up to 100 product listings",
+      "Up to 300 product listings",
       "Large catalog management",
       "Enterprise supplier presence",
       "High-volume selling capability",
       "Automated payment settlements",
       "Priority support",
+      "Lifetime updates",
+    ],
+  },
+  {
+    name: "Large Enterprise Lifetime",
+    monthlyPrice: "Custom",
+    cta: "Get in Touch",
+    ctaVariant: "primary",
+    isLifetime: true,
+    features: [
+      "Unlimited product listings",
+      "Dedicated account management",
+      "Custom settlement terms",
+      "API access for catalog sync",
+      "Export-focused infrastructure",
       "Lifetime updates",
     ],
   },
@@ -420,7 +452,7 @@ export default function PricingPage() {
               ref={frameRef}
               className="rounded-2xl max-md:max-w-sm max-md:mx-auto border border-gray-200 bg-white overflow-hidden"
             >
-              <div className={`grid grid-cols-1 divide-x divide-y divide-gray-200 ${showLifetime ? "md:grid-cols-2" : "md:grid-cols-4"}`}>
+              <div className="grid grid-cols-1 md:grid-cols-4 divide-x divide-y divide-gray-200">
                 {tiers.filter((t) => !!t.isLifetime === showLifetime).map((t) => {
                   return (
                     <div key={t.name} className="relative">
