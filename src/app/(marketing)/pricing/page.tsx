@@ -497,7 +497,7 @@ export default function PricingPage() {
                   {upiOpen ? "Hide" : "Calculate Fees"}
                 </Button>
               </div>
-              <Separator className="my-3" />
+              <Separator />
               <p className="text-sm text-muted-foreground">Platform fee applied on all UPI-based payments. Settlements processed automatically with no hidden charges.</p>
               <div
                 className="grid transition-all duration-500 ease-in-out"
@@ -546,7 +546,7 @@ export default function PricingPage() {
                   {netOpen ? "Hide" : "Calculate Fees"}
                 </Button>
               </div>
-              <Separator className="my-3" />
+              <Separator />
               <p className="text-sm text-muted-foreground">Fixed flat fee per net banking transaction. Settlements processed automatically with no hidden charges.</p>
               <div
                 className="grid transition-all duration-500 ease-in-out"
