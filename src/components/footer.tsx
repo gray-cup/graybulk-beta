@@ -15,7 +15,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-neutral-200 bg-white">
       <div className="max-w-7xl mx-auto px-4 lg:px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           <div>
             <Logo className="h-10 w-auto" />
             <h3 className="font-semibold text-lg mb-1.5 mt-4">Gray Bulk</h3>
@@ -74,6 +74,26 @@ export default function Footer() {
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Call me
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-lg mb-4">Legal</h4>
+            <ul className="space-y-2 text-md">
+              <li>
+                <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/seller-agreement" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Seller Agreement
                 </Link>
               </li>
             </ul>
