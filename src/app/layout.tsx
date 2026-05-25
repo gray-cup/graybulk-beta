@@ -91,7 +91,7 @@ export default function RootLayout({
         )}
       >
         <RootProviders>{children}</RootProviders>
-        <ChatBotRandom />
+        {/* <ChatBotRandom /> */}
         <Analytics />
       </body>
     </html>

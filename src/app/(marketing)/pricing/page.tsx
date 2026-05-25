@@ -11,7 +11,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import UPILogo from "@/components/UPI";
+import UPILogo from "@/components/cards/upi";
 
 type Tier = {
   name: string;
@@ -22,6 +22,7 @@ type Tier = {
   features: string[];
   flagText?: string;
   hasBilling?: boolean;
+  isLifetime?: boolean;
 };
 
 /* ---------- Single borderless plan column ---------- */
@@ -50,15 +51,18 @@ function PricingCard({
                     {billing === "yearly" && tier.yearlyPrice ? tier.yearlyPrice : tier.monthlyPrice}
                   </span>
                 </div>
-                {tier.hasBilling && (
+                {tier.isLifetime ? (
+                  <CardDescription className="text-xs text-muted-foreground">one-time payment</CardDescription>
+                ) : tier.hasBilling && (
                   <CardDescription className="text-xs text-muted-foreground">
                     {billing === "yearly" ? "per year · 2 months free" : "per month"}
                   </CardDescription>
                 )}
               </div>
               <Button
-                className="w-full h-12 rounded-lg"
+                className="w-full h-12 rounded-lg mt-auto"
                 variant={tier.ctaVariant ?? "default"}
+                size="sm"
               >
                 {tier.cta}
               </Button>
@@ -148,12 +152,45 @@ const tiers: Tier[] = [
       "Export-focused infrastructure",
     ],
   },
+  {
+    name: "Lifetime",
+    monthlyPrice: "₹80,000",
+    cta: "Get Lifetime Access",
+    ctaVariant: "primary",
+    isLifetime: true,
+    features: [
+      "Up to 30 product listings",
+      "Expanded catalog visibility",
+      "Enhanced supplier presence",
+      "Scalable storefront",
+      "Automated payment settlements",
+      "Email support",
+      "Lifetime updates",
+    ],
+  },
+  {
+    name: "Enterprise Lifetime",
+    monthlyPrice: "₹2,10,000",
+    cta: "Get Lifetime Access",
+    ctaVariant: "primary",
+    isLifetime: true,
+    features: [
+      "Up to 100 product listings",
+      "Large catalog management",
+      "Enterprise supplier presence",
+      "High-volume selling capability",
+      "Automated payment settlements",
+      "Priority support",
+      "Lifetime updates",
+    ],
+  },
 ];
 
 /* ---------- Page ---------- */
 export default function PricingPage() {
   const frameRef = useRef<HTMLDivElement | null>(null);
   const [billing, setBilling] = useState<"monthly" | "yearly">("yearly");
+  const [showLifetime, setShowLifetime] = useState(false);
 
   const [upiOpen, setUpiOpen] = useState(false);
   const [upiAmount, setUpiAmount] = useState(10000);
@@ -269,8 +306,7 @@ export default function PricingPage() {
                       step={1000}
                       value={upiAmount}
                       onChange={(e) => setUpiAmount(Number(e.target.value))}
-                      className="w-full"
-                      style={{ accentColor: "#0433ff" }}
+                      className="w-full accent-black"
                     />
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
                       <span>₹1,000</span>
@@ -319,8 +355,7 @@ export default function PricingPage() {
                       step={100000}
                       value={netAmount}
                       onChange={(e) => setNetAmount(Number(e.target.value))}
-                      className="w-full"
-                      style={{ accentColor: "#0433ff" }}
+                      className="w-full accent-black"
                     />
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
                       <span>₹1,00,000</span>
@@ -346,9 +381,9 @@ export default function PricingPage() {
           <div className="flex justify-center mb-6">
             <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 gap-1">
               <button
-                onClick={() => setBilling("monthly")}
+                onClick={() => { setBilling("monthly"); setShowLifetime(false); }}
                 className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  billing === "monthly"
+                  billing === "monthly" && !showLifetime
                     ? "bg-gray-100 text-black"
                     : "text-muted-foreground hover:text-black"
                 }`}
@@ -356,14 +391,24 @@ export default function PricingPage() {
                 Monthly
               </button>
               <button
-                onClick={() => setBilling("yearly")}
+                onClick={() => { setBilling("yearly"); setShowLifetime(false); }}
                 className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  billing === "yearly"
+                  billing === "yearly" && !showLifetime
                     ? "bg-gray-100 text-black"
                     : "text-muted-foreground hover:text-black"
                 }`}
               >
                 Yearly
+              </button>
+              <button
+                onClick={() => setShowLifetime(true)}
+                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  showLifetime
+                    ? "bg-gray-100 text-black"
+                    : "text-muted-foreground hover:text-black"
+                }`}
+              >
+                Lifetime
               </button>
             </div>
           </div>
@@ -375,8 +420,8 @@ export default function PricingPage() {
               ref={frameRef}
               className="rounded-2xl max-md:max-w-sm max-md:mx-auto border border-gray-200 bg-white overflow-hidden"
             >
-              <div className="grid grid-cols-1 md:grid-cols-4 divide-x divide-gray-200">
-                {tiers.map((t) => {
+              <div className={`grid grid-cols-1 divide-x divide-y divide-gray-200 ${showLifetime ? "md:grid-cols-2" : "md:grid-cols-4"}`}>
+                {tiers.filter((t) => !!t.isLifetime === showLifetime).map((t) => {
                   return (
                     <div key={t.name} className="relative">
                       <PricingCard tier={t} billing={billing} />
