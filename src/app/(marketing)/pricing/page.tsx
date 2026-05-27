@@ -228,7 +228,8 @@ export default function PricingPage() {
   const [billing, setBilling] = useState<"monthly" | "yearly">("yearly");
   const [showLifetime, setShowLifetime] = useState(false);
 
-  const [paymentTab, setPaymentTab] = useState<"upi-net" | "cards">("upi-net");
+  const [regionTab, setRegionTab] = useState<"domestic" | "international">("domestic");
+  const [paymentTab, setPaymentTab] = useState<"upi-net" | "wire" | "cards">("upi-net");
 
   const [upiOpen, setUpiOpen] = useState(false);
   const [upiAmount, setUpiAmount] = useState(10000);
@@ -371,26 +372,100 @@ export default function PricingPage() {
 
 
           <div className="flex flex-col gap-4 w-full">
-            <div className="inline-flex self-start rounded-lg border border-gray-200 bg-white p-1 gap-1">
-              <button
-                onClick={() => setPaymentTab("upi-net")}
-                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  paymentTab === "upi-net" ? "bg-gray-100 text-black" : "text-muted-foreground hover:text-black"
-                }`}
-              >
-                UPI & Net Banking
-              </button>
-              <button
-                onClick={() => setPaymentTab("cards")}
-                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  paymentTab === "cards" ? "bg-gray-100 text-black" : "text-muted-foreground hover:text-black"
-                }`}
-              >
-                Cards
-              </button>
+            <div className="flex items-center justify-between gap-3">
+              <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 gap-1">
+                <button
+                  onClick={() => { setRegionTab("domestic"); setPaymentTab("upi-net"); }}
+                  className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    regionTab === "domestic" ? "bg-gray-100 text-black" : "text-muted-foreground hover:text-black"
+                  }`}
+                >
+                  Domestic
+                </button>
+                <button
+                  onClick={() => { setRegionTab("international"); setPaymentTab("wire"); }}
+                  className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    regionTab === "international" ? "bg-gray-100 text-black" : "text-muted-foreground hover:text-black"
+                  }`}
+                >
+                  International
+                </button>
+              </div>
+
+              <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 gap-1">
+                {regionTab === "domestic" ? (
+                  <>
+                    <button
+                      onClick={() => setPaymentTab("upi-net")}
+                      className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                        paymentTab === "upi-net" ? "bg-gray-100 text-black" : "text-muted-foreground hover:text-black"
+                      }`}
+                    >
+                      UPI & Net Banking
+                    </button>
+                    <button
+                      onClick={() => setPaymentTab("cards")}
+                      className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                        paymentTab === "cards" ? "bg-gray-100 text-black" : "text-muted-foreground hover:text-black"
+                      }`}
+                    >
+                      Cards
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => setPaymentTab("wire")}
+                      className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                        paymentTab === "wire" ? "bg-gray-100 text-black" : "text-muted-foreground hover:text-black"
+                      }`}
+                    >
+                      Wire Transfer
+                    </button>
+                    <button
+                      onClick={() => setPaymentTab("cards")}
+                      className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                        paymentTab === "cards" ? "bg-gray-100 text-black" : "text-muted-foreground hover:text-black"
+                      }`}
+                    >
+                      Cards
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
 
-            {paymentTab === "cards" ? (
+            {paymentTab === "wire" ? (
+              <Card className="p-6 border border-gray-200 rounded-2xl bg-white overflow-hidden">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex flex-col gap-2">
+                    <BankIcon size={32} weight="duotone" color="#0433ff" />
+                    <span className="text-lg font-semibold pt-2">Wire Transfer</span>
+                    <span className="text-3xl font-semibold tracking-[-0.1rem] tabular-nums">1.5%</span>
+                    <CardDescription className="text-xs text-muted-foreground">per wire transfer transaction</CardDescription>
+                  </div>
+                </div>
+                <Separator className="my-3" />
+                <p className="text-sm text-muted-foreground">Platform fee applied on all wire transfer payments. Settlements processed automatically with no hidden charges.</p>
+              </Card>
+            ) : paymentTab === "cards" && regionTab === "international" ? (
+              <Card className="p-6 border border-gray-200 rounded-2xl bg-white overflow-hidden">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-1.5">
+                      <MastercardLogo className="h-9 w-auto" />
+                      <VisaLogo className="h-9 w-auto" />
+                      <AmexLogo className="h-9 w-auto" />
+                    </div>
+                    <span className="text-lg font-semibold pt-2">International Cards</span>
+                    <span className="text-3xl font-semibold tracking-[-0.1rem] tabular-nums">3.5%</span>
+                    <CardDescription className="text-xs text-muted-foreground">per international card transaction</CardDescription>
+                  </div>
+                </div>
+                <Separator className="my-3" />
+                <p className="text-sm text-muted-foreground">Platform fee applied on all international card payments. Settlements processed automatically with no hidden charges.</p>
+              </Card>
+            ) : paymentTab === "cards" ? (
               <Card className="p-6 border border-gray-200 rounded-2xl bg-white overflow-hidden">
                 <div className="flex items-start justify-between gap-4">
                   <span className="text-lg font-semibold">Card Payments</span>
