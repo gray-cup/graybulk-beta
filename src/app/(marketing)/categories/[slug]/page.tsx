@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { categories } from "@/lib/categories";
+import { categories, toSlug } from "@/lib/categories";
 
 export function generateStaticParams() {
   return categories.map((c) => ({ slug: c.slug }));
@@ -27,9 +27,10 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {category.products.map((product) => (
-          <div
+          <Link
             key={product.name}
-            className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
+            href={`/categories/${category.slug}/${toSlug(product.name)}`}
+            className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer block"
           >
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">
               <Image
@@ -53,7 +54,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
               </div>
               <p className="text-xs text-[#0052FF] font-medium truncate">{product.supplier}</p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 

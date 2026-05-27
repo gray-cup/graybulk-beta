@@ -6,6 +6,18 @@ export type Product = {
   supplier: string;
 };
 
+export function parsePrice(price: string): number {
+  return parseInt(price.replace(/[₹,\s]/g, ""), 10);
+}
+
+export function formatINR(amount: number): string {
+  return "₹" + amount.toLocaleString("en-IN");
+}
+
+export function toSlug(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
 export type Category = {
   slug: string;
   name: string;

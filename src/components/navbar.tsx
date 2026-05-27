@@ -130,6 +130,11 @@ export function Navbar() {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
+                  <Link href="/buyer-agreement" className="cursor-pointer">
+                    Buyer Agreement
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link href="/privacy" className="cursor-pointer">
                     Privacy Policy
                   </Link>
@@ -163,23 +168,17 @@ export function Navbar() {
           ) : (
             <>
               {/* Internal route: use Link + asChild so it doesn't flash a reload */}
-              <Link href="/play-with-us" className="inline-block">
+              <Link href="/sign-up" className="inline-block">
                 <Button variant="secondary" size="sm">
                   Sign Up
                 </Button>
               </Link>
 
-              {/* Sign-in always visible outside the app */}
-              <a
-                href="https://app.graybulk.com/"
-                target="_blank"
-                rel="dofollow noopener"
-                id="sign-in-link"
-              >
+              <Link href="/login" id="sign-in-link" className="inline-block">
                 <Button variant="primary" size="sm">
                   Sign In
                 </Button>
-              </a>
+              </Link>
             </>
           )}
         </div>
