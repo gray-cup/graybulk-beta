@@ -239,9 +239,13 @@ export default function PricingPage() {
 
   const [wireCalcOpen, setWireCalcOpen] = useState(false);
   const [wireAmount, setWireAmount] = useState(5000);
+  const [wireCurrency, setWireCurrency] = useState<"USD" | "INR">("USD");
 
   const [intlCardCalcOpen, setIntlCardCalcOpen] = useState(false);
   const [intlCardAmount, setIntlCardAmount] = useState(5000);
+  const [intlCardCurrency, setIntlCardCurrency] = useState<"USD" | "INR">("USD");
+
+  const FX = 95.5;
 
   const [cardCalcOpen, setCardCalcOpen] = useState(false);
   const [cardAmount, setCardAmount] = useState(10000);
@@ -447,7 +451,7 @@ export default function PricingPage() {
                   <div className="flex flex-col gap-2">
                     <BankIcon size={32} weight="duotone" color="#0433ff" />
                     <span className="text-lg font-semibold pt-2">Wire Transfer</span>
-                    <span className="text-3xl font-semibold tracking-[-0.1rem] tabular-nums">1.5%</span>
+                    <span className="text-3xl font-semibold tracking-[-0.1rem] tabular-nums">1.2%</span>
                     <CardDescription className="text-xs text-muted-foreground">per wire transfer transaction</CardDescription>
                   </div>
                   <Button variant="secondary" className="shrink-0 mt-1" onClick={() => setWireCalcOpen((v) => !v)}>
@@ -462,9 +466,25 @@ export default function PricingPage() {
                 >
                   <div className="overflow-hidden">
                     <div className="flex flex-col gap-3 pt-4">
+                      <div className="inline-flex self-start rounded-lg border border-gray-200 bg-white p-0.5 gap-0.5">
+                        {(["USD", "INR"] as const).map((c) => (
+                          <button
+                            key={c}
+                            type="button"
+                            onClick={() => setWireCurrency(c)}
+                            className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${wireCurrency === c ? "bg-[#FF5A00] text-white" : "text-muted-foreground hover:text-black"}`}
+                          >
+                            {c}
+                          </button>
+                        ))}
+                      </div>
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Transaction value</span>
-                        <span className="font-semibold tabular-nums">${wireAmount.toLocaleString("en-US")}</span>
+                        <span className="font-semibold tabular-nums">
+                          {wireCurrency === "USD"
+                            ? `$${wireAmount.toLocaleString("en-US")}`
+                            : `₹${Math.round(wireAmount * FX).toLocaleString("en-IN")}`}
+                        </span>
                       </div>
                       <input
                         type="range"
@@ -476,16 +496,25 @@ export default function PricingPage() {
                         className="w-full"
                       />
                       <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span>$1,000</span>
-                        <span>$100,000</span>
+                        {wireCurrency === "USD"
+                          ? <><span>$1,000</span><span>$100,000</span></>
+                          : <><span>₹{Math.round(1000 * FX).toLocaleString("en-IN")}</span><span>₹{Math.round(100000 * FX).toLocaleString("en-IN")}</span></>}
                       </div>
                       <div className="rounded-xl bg-gray-50 px-4 py-3 flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Platform fee (1.5%)</span>
-                        <span className="font-semibold tabular-nums">${(wireAmount * 0.015).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        <span className="text-muted-foreground">Platform fee (1.2%)</span>
+                        <span className="font-semibold tabular-nums">
+                          {wireCurrency === "USD"
+                            ? `$${(wireAmount * 0.012).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                            : `₹${Math.round(wireAmount * FX * 0.012).toLocaleString("en-IN")}`}
+                        </span>
                       </div>
                       <div className="rounded-xl bg-gray-50 px-4 py-3 flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">You receive</span>
-                        <span className="font-semibold tabular-nums">${(wireAmount - wireAmount * 0.015).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        <span className="font-semibold tabular-nums">
+                          {wireCurrency === "USD"
+                            ? `$${(wireAmount * 0.988).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                            : `₹${Math.round(wireAmount * FX * 0.988).toLocaleString("en-IN")}`}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -501,7 +530,7 @@ export default function PricingPage() {
                       <AmexLogo className="h-9 w-auto" />
                     </div>
                     <span className="text-lg font-semibold pt-2">International Cards</span>
-                    <span className="text-3xl font-semibold tracking-[-0.1rem] tabular-nums">3.5%</span>
+                    <span className="text-3xl font-semibold tracking-[-0.1rem] tabular-nums">2.95%</span>
                     <CardDescription className="text-xs text-muted-foreground">per international card transaction</CardDescription>
                   </div>
                   <Button variant="secondary" className="shrink-0 mt-1" onClick={() => setIntlCardCalcOpen((v) => !v)}>
@@ -516,9 +545,25 @@ export default function PricingPage() {
                 >
                   <div className="overflow-hidden">
                     <div className="flex flex-col gap-3 pt-4">
+                      <div className="inline-flex self-start rounded-lg border border-gray-200 bg-white p-0.5 gap-0.5">
+                        {(["USD", "INR"] as const).map((c) => (
+                          <button
+                            key={c}
+                            type="button"
+                            onClick={() => setIntlCardCurrency(c)}
+                            className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${intlCardCurrency === c ? "bg-[#FF5A00] text-white" : "text-muted-foreground hover:text-black"}`}
+                          >
+                            {c}
+                          </button>
+                        ))}
+                      </div>
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Transaction value</span>
-                        <span className="font-semibold tabular-nums">${intlCardAmount.toLocaleString("en-US")}</span>
+                        <span className="font-semibold tabular-nums">
+                          {intlCardCurrency === "USD"
+                            ? `$${intlCardAmount.toLocaleString("en-US")}`
+                            : `₹${Math.round(intlCardAmount * FX).toLocaleString("en-IN")}`}
+                        </span>
                       </div>
                       <input
                         type="range"
@@ -530,16 +575,25 @@ export default function PricingPage() {
                         className="w-full"
                       />
                       <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span>$100</span>
-                        <span>$50,000</span>
+                        {intlCardCurrency === "USD"
+                          ? <><span>$100</span><span>$50,000</span></>
+                          : <><span>₹{Math.round(100 * FX).toLocaleString("en-IN")}</span><span>₹{Math.round(50000 * FX).toLocaleString("en-IN")}</span></>}
                       </div>
                       <div className="rounded-xl bg-gray-50 px-4 py-3 flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Platform fee (3.5%)</span>
-                        <span className="font-semibold tabular-nums">${(intlCardAmount * 0.035).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        <span className="text-muted-foreground">Platform fee (2.95%)</span>
+                        <span className="font-semibold tabular-nums">
+                          {intlCardCurrency === "USD"
+                            ? `$${(intlCardAmount * 0.0295).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                            : `₹${Math.round(intlCardAmount * FX * 0.0295).toLocaleString("en-IN")}`}
+                        </span>
                       </div>
                       <div className="rounded-xl bg-gray-50 px-4 py-3 flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">You receive</span>
-                        <span className="font-semibold tabular-nums">${(intlCardAmount - intlCardAmount * 0.035).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        <span className="font-semibold tabular-nums">
+                          {intlCardCurrency === "USD"
+                            ? `$${(intlCardAmount * 0.9705).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                            : `₹${Math.round(intlCardAmount * FX * 0.9705).toLocaleString("en-IN")}`}
+                        </span>
                       </div>
                     </div>
                   </div>
