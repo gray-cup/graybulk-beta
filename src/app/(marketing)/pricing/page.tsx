@@ -237,6 +237,12 @@ export default function PricingPage() {
   const [netOpen, setNetOpen] = useState(false);
   const [netAmount, setNetAmount] = useState(1000000);
 
+  const [wireCalcOpen, setWireCalcOpen] = useState(false);
+  const [wireAmount, setWireAmount] = useState(5000);
+
+  const [intlCardCalcOpen, setIntlCardCalcOpen] = useState(false);
+  const [intlCardAmount, setIntlCardAmount] = useState(5000);
+
   const [cardCalcOpen, setCardCalcOpen] = useState(false);
   const [cardAmount, setCardAmount] = useState(10000);
   const [cardType, setCardType] = useState("Credit card (Mastercard/Visa/Rupay/Diners)");
@@ -444,9 +450,46 @@ export default function PricingPage() {
                     <span className="text-3xl font-semibold tracking-[-0.1rem] tabular-nums">1.5%</span>
                     <CardDescription className="text-xs text-muted-foreground">per wire transfer transaction</CardDescription>
                   </div>
+                  <Button variant="secondary" className="shrink-0 mt-1" onClick={() => setWireCalcOpen((v) => !v)}>
+                    {wireCalcOpen ? "Hide" : "Calculate Fees"}
+                  </Button>
                 </div>
                 <Separator className="my-3" />
                 <p className="text-sm text-muted-foreground">Platform fee applied on all wire transfer payments. Settlements processed automatically with no hidden charges.</p>
+                <div
+                  className="grid transition-all duration-500 ease-in-out"
+                  style={{ gridTemplateRows: wireCalcOpen ? "1fr" : "0fr" }}
+                >
+                  <div className="overflow-hidden">
+                    <div className="flex flex-col gap-3 pt-4">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">Transaction value</span>
+                        <span className="font-semibold tabular-nums">${wireAmount.toLocaleString("en-US")}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min={1000}
+                        max={100000}
+                        step={1000}
+                        value={wireAmount}
+                        onChange={(e) => setWireAmount(Number(e.target.value))}
+                        className="w-full"
+                      />
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <span>$1,000</span>
+                        <span>$100,000</span>
+                      </div>
+                      <div className="rounded-xl bg-gray-50 px-4 py-3 flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">Platform fee (1.5%)</span>
+                        <span className="font-semibold tabular-nums">${(wireAmount * 0.015).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                      </div>
+                      <div className="rounded-xl bg-gray-50 px-4 py-3 flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">You receive</span>
+                        <span className="font-semibold tabular-nums">${(wireAmount - wireAmount * 0.015).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </Card>
             ) : paymentTab === "cards" && regionTab === "international" ? (
               <Card className="p-6 border border-gray-200 rounded-2xl bg-white overflow-hidden">
@@ -461,9 +504,46 @@ export default function PricingPage() {
                     <span className="text-3xl font-semibold tracking-[-0.1rem] tabular-nums">3.5%</span>
                     <CardDescription className="text-xs text-muted-foreground">per international card transaction</CardDescription>
                   </div>
+                  <Button variant="secondary" className="shrink-0 mt-1" onClick={() => setIntlCardCalcOpen((v) => !v)}>
+                    {intlCardCalcOpen ? "Hide" : "Calculate Fees"}
+                  </Button>
                 </div>
                 <Separator className="my-3" />
                 <p className="text-sm text-muted-foreground">Platform fee applied on all international card payments. Settlements processed automatically with no hidden charges.</p>
+                <div
+                  className="grid transition-all duration-500 ease-in-out"
+                  style={{ gridTemplateRows: intlCardCalcOpen ? "1fr" : "0fr" }}
+                >
+                  <div className="overflow-hidden">
+                    <div className="flex flex-col gap-3 pt-4">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">Transaction value</span>
+                        <span className="font-semibold tabular-nums">${intlCardAmount.toLocaleString("en-US")}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min={100}
+                        max={50000}
+                        step={100}
+                        value={intlCardAmount}
+                        onChange={(e) => setIntlCardAmount(Number(e.target.value))}
+                        className="w-full"
+                      />
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <span>$100</span>
+                        <span>$50,000</span>
+                      </div>
+                      <div className="rounded-xl bg-gray-50 px-4 py-3 flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">Platform fee (3.5%)</span>
+                        <span className="font-semibold tabular-nums">${(intlCardAmount * 0.035).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                      </div>
+                      <div className="rounded-xl bg-gray-50 px-4 py-3 flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">You receive</span>
+                        <span className="font-semibold tabular-nums">${(intlCardAmount - intlCardAmount * 0.035).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </Card>
             ) : paymentTab === "cards" ? (
               <Card className="p-6 border border-gray-200 rounded-2xl bg-white overflow-hidden">
