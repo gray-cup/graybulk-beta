@@ -83,7 +83,7 @@ export default function Footer() {
             <ul className="space-y-2 text-md">
               <li>
                 <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Terms of Service
+                  Terms &amp; Conditions
                 </Link>
               </li>
               <li>
@@ -92,13 +92,28 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/shipping-returns" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Shipping Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/cancellation-refunds" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Cancellation &amp; Refunds
+                </Link>
+              </li>
+              <li>
                 <Link href="/seller-agreement" className="text-muted-foreground hover:text-foreground transition-colors">
                   Seller Agreement
                 </Link>
               </li>
               <li>
-                <Link href="/shipping-returns" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Shipping &amp; Returns
+                <Link href="/buyer-agreement" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Buyer Agreement
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Contact Us
                 </Link>
               </li>
             </ul>
@@ -118,8 +133,10 @@ export default function Footer() {
 </div>
           </div>
         </div>
-        <div className="mt-10 pt-6 border-t border-border text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Gray Bulk. All rights reserved.</p>
+        <div className="mt-10 pt-6 border-t border-border text-center text-sm text-muted-foreground space-y-1.5">
+          <p>© {new Date().getFullYear()} Gray Cup Enterprises Private Limited. All rights reserved.</p>
+          <p>FF122, Rodeo Drive Mall, GT Road, TDI City, Kundli, Sonipat, Haryana – 131030, India</p>
+          <p>CIN: U47211DL2025PTC457808 &nbsp;|&nbsp; GSTIN: 06AAMCG4985H1Z4</p>
         </div>
       </div>
     </footer>

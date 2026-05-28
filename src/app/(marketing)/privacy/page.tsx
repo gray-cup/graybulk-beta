@@ -296,16 +296,25 @@ export default function PrivacyPolicy() {
           rules, Gray Cup Enterprises Private Limited has designated a Grievance
           Officer to address privacy-related concerns. You may reach us at:
         </p>
-        <p className="mb-2">
-          <strong>Gray Cup Enterprises Private Limited</strong>
+        <p className="mb-1"><strong>Gray Cup Enterprises Private Limited</strong></p>
+        <p className="mb-1">FF122, Rodeo Drive Mall, GT Road, TDI City, Kundli, Sonipat, Haryana – 131030</p>
+        <p className="mb-1">CIN: U47211DL2025PTC457808 &nbsp;|&nbsp; GSTIN: 06AAMCG4985H1Z4</p>
+        <p className="mb-1">
+          Email:{" "}
+          <a href="mailto:arjun@graycup.in" className="text-blue-600 hover:underline">
+            arjun@graycup.in
+          </a>
+        </p>
+        <p className="mb-1">
+          Email:{" "}
+          <a href="mailto:office@graycup.org" className="text-blue-600 hover:underline">
+            office@graycup.org
+          </a>
         </p>
         <p className="mb-4">
-          Email:{" "}
-          <a
-            href="mailto:legal@graybulk.com"
-            className="text-blue-600 hover:underline"
-          >
-            legal@graybulk.com
+          Phone:{" "}
+          <a href="tel:+918527914317" className="text-blue-600 hover:underline">
+            +91 85279 14317
           </a>
         </p>
         <p className="mb-4">

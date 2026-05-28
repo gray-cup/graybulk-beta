@@ -190,22 +190,27 @@ export default function ShippingReturns() {
           10. Contact
         </h2>
         <p className="mb-4">
-          For shipping queries or to report a delivery issue, contact us at{" "}
-          <a
-            href="mailto:support@graybulk.com"
-            className="text-blue-600 hover:underline"
-          >
-            support@graybulk.com
-          </a>{" "}
-          or raise a ticket directly through the Gray Bulk platform. For legal
-          matters, write to{" "}
-          <a
-            href="mailto:legal@graybulk.com"
-            className="text-blue-600 hover:underline"
-          >
-            legal@graybulk.com
+          For shipping queries or to report a delivery issue, contact us at:
+        </p>
+        <p className="mb-1"><strong>Gray Cup Enterprises Private Limited</strong></p>
+        <p className="mb-1">FF122, Rodeo Drive Mall, GT Road, TDI City, Kundli, Sonipat, Haryana – 131030</p>
+        <p className="mb-1">
+          Email:{" "}
+          <a href="mailto:arjun@graycup.in" className="text-blue-600 hover:underline">
+            arjun@graycup.in
           </a>
-          .
+        </p>
+        <p className="mb-1">
+          Email:{" "}
+          <a href="mailto:office@graycup.org" className="text-blue-600 hover:underline">
+            office@graycup.org
+          </a>
+        </p>
+        <p className="mb-4">
+          Phone:{" "}
+          <a href="tel:+918527914317" className="text-blue-600 hover:underline">
+            +91 85279 14317
+          </a>
         </p>
       </div>
     </div>

@@ -103,10 +103,14 @@ export default function BuyerAgreement() {
           3. Payments
         </h2>
         <p className="mb-4">
-          All payments on Gray Bulk are processed through secure payment
-          gateways. By making a payment, you authorise Gray Bulk to collect
-          funds on behalf of the seller as per the agreed order value. The
-          following conditions apply:
+          All payments on Gray Bulk are processed through secure, PCI-DSS
+          compliant payment gateways. For domestic transactions we use{" "}
+          <strong>CCAvenue</strong>; for international transactions we use{" "}
+          <strong>Cashfree Payments</strong> and <strong>Razorpay</strong>.
+          We also accept UPI payments to <strong>graycup@kotak</strong> and
+          direct bank transfers (NEFT/RTGS). By making a payment, you authorise
+          Gray Bulk to collect funds on behalf of the seller as per the agreed
+          order value. The following conditions apply:
         </p>
         <ul className="list-disc pl-6 mb-4 space-y-2">
           <li>
@@ -311,16 +315,25 @@ export default function BuyerAgreement() {
           For questions regarding this Agreement or buyer onboarding, please
           contact:
         </p>
-        <p className="mb-2">
-          <strong>Gray Cup Enterprises Private Limited</strong>
+        <p className="mb-1"><strong>Gray Cup Enterprises Private Limited</strong></p>
+        <p className="mb-1">FF122, Rodeo Drive Mall, GT Road, TDI City, Kundli, Sonipat, Haryana – 131030</p>
+        <p className="mb-1">CIN: U47211DL2025PTC457808 &nbsp;|&nbsp; GSTIN: 06AAMCG4985H1Z4</p>
+        <p className="mb-1">
+          Email:{" "}
+          <a href="mailto:arjun@graycup.in" className="text-blue-600 hover:underline">
+            arjun@graycup.in
+          </a>
+        </p>
+        <p className="mb-1">
+          Email:{" "}
+          <a href="mailto:office@graycup.org" className="text-blue-600 hover:underline">
+            office@graycup.org
+          </a>
         </p>
         <p className="mb-4">
-          Email:{" "}
-          <a
-            href="mailto:legal@graybulk.com"
-            className="text-blue-600 hover:underline"
-          >
-            legal@graybulk.com
+          Phone:{" "}
+          <a href="tel:+918527914317" className="text-blue-600 hover:underline">
+            +91 85279 14317
           </a>
         </p>
       </div>
