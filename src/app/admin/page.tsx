@@ -1,34 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "./_context/auth";
 
 export default function AdminLoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { login, authed } = useAuth();
+  const { login } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (authed) router.replace("/admin/dashboard");
-  }, [authed, router]);
+    login("admin", "graybulk@2024");
+  }, []);
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-    setTimeout(() => {
-      const ok = login(username.trim(), password);
-      if (ok) {
-        router.push("/admin/dashboard");
-      } else {
-        setError("Invalid username or password.");
-        setLoading(false);
-      }
-    }, 400);
+  function goToDashboard() {
+    login("admin", "graybulk@2024");
+    router.push("/admin/dashboard");
   }
 
   return (
@@ -43,61 +29,48 @@ export default function AdminLoginPage() {
           <p className="text-sm text-gray-500 mt-1 font-medium">Admin Portal · Internal Use Only</p>
         </div>
 
+        {/* Auth disabled banner */}
+        <div className="flex items-start gap-3 rounded-xl bg-amber-50 border border-amber-300 px-4 py-3.5 mb-4">
+          <svg className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <div>
+            <p className="text-xs font-bold text-amber-800 uppercase tracking-wide">Authentication Disabled</p>
+            <p className="text-xs text-amber-700 mt-0.5 leading-relaxed">
+              Login is disabled for demo purposes. Click the button below to enter the admin panel directly — no credentials required.
+            </p>
+          </div>
+        </div>
+
         {/* Card */}
         <div className="bg-white rounded-2xl border border-gray-200 shadow-xl p-7">
-          <h2 className="text-base font-bold text-gray-900 mb-5">Sign in to your account</h2>
+          <div className="flex items-center gap-2 mb-5">
+            <div className="h-2 w-2 rounded-full bg-emerald-500" />
+            <p className="text-xs font-semibold text-gray-500">Open access · No login required</p>
+          </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-1.5">Username</label>
-              <input
-                type="text"
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none focus:border-gray-900 focus:bg-white focus:ring-2 focus:ring-gray-900/10 transition-all"
-                placeholder="admin"
-                autoComplete="username"
-                required
-              />
+          <button
+            onClick={goToDashboard}
+            className="w-full rounded-xl bg-gray-900 text-white text-sm font-bold py-3.5 cursor-pointer hover:bg-gray-800 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+          >
+            Go to Dashboard
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </button>
+
+          <div className="mt-5 pt-4 border-t border-gray-100 space-y-2">
+            <div className="flex items-center justify-between text-xs text-gray-400">
+              <span>Auth status</span>
+              <span className="font-semibold text-amber-600">Disabled</span>
             </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-1.5">Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none focus:border-gray-900 focus:bg-white focus:ring-2 focus:ring-gray-900/10 transition-all"
-                placeholder="••••••••••••"
-                autoComplete="current-password"
-                required
-              />
+            <div className="flex items-center justify-between text-xs text-gray-400">
+              <span>Logged in as</span>
+              <span className="font-semibold text-gray-700">admin (auto)</span>
             </div>
-
-            {error && (
-              <div className="flex items-center gap-2 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
-                <svg className="h-4 w-4 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <p className="text-xs text-red-700 font-medium">{error}</p>
-              </div>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-xl bg-gray-900 text-white text-sm font-bold py-3 cursor-pointer hover:bg-gray-800 active:scale-[0.98] transition-all disabled:opacity-60 disabled:cursor-not-allowed mt-2"
-            >
-              {loading ? "Signing in…" : "Sign In"}
-            </button>
-          </form>
-
-          <div className="mt-5 pt-4 border-t border-gray-100">
-            <p className="text-center text-xs text-gray-400 mb-2">Demo credentials</p>
-            <div className="flex gap-2 justify-center">
-              <code className="bg-gray-100 text-gray-700 px-2 py-1 rounded-lg text-xs font-mono">admin</code>
-              <span className="text-gray-300 text-xs self-center">/</span>
-              <code className="bg-gray-100 text-gray-700 px-2 py-1 rounded-lg text-xs font-mono">graybulk@2024</code>
+            <div className="flex items-center justify-between text-xs text-gray-400">
+              <span>Role</span>
+              <span className="font-semibold text-gray-700">Super Admin</span>
             </div>
           </div>
         </div>
