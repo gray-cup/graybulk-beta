@@ -94,7 +94,7 @@ export default function VendorsPage() {
               </div>
             </div>
 
-            <div className="mt-3 pt-3 border-t border-gray-100 flex gap-4">
+            <div className="mt-3 pt-3 border-t border-gray-100 flex gap-4 items-end">
               <div>
                 <p className="text-xs text-gray-400">Total Settled</p>
                 <p className="text-sm font-bold text-emerald-600 mt-0.5">{v.totalSettled}</p>
@@ -105,9 +105,22 @@ export default function VendorsPage() {
                   {v.pendingSettlement}
                 </p>
               </div>
-              <div className="ml-auto">
-                <p className="text-xs text-gray-400">GSTIN</p>
-                <p className="text-xs font-mono text-gray-700 mt-0.5">{v.gstin}</p>
+              <div className="ml-auto flex items-center gap-2">
+                <a
+                  href="/graybulk-tie-up-agreement.pdf"
+                  download="graybulk-tie-up-agreement.pdf"
+                  onClick={e => e.stopPropagation()}
+                  className="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 hover:border-gray-300 transition-colors"
+                  title="Download Tie-Up Agreement"
+                >
+                  <svg className="h-3.5 w-3.5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/>
+                  </svg>
+                  Agreement
+                  <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                </a>
               </div>
             </div>
           </button>
@@ -200,6 +213,32 @@ export default function VendorsPage() {
                       {selectedVendor.pendingSettlement}
                     </p>
                   </div>
+                </div>
+              </section>
+
+              {/* Tie-Up Agreement */}
+              <section>
+                <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">Tie-Up Agreement</h3>
+                <div className="flex items-center gap-4 rounded-xl border border-gray-200 bg-gray-50 px-4 py-4">
+                  <div className="h-10 w-10 rounded-lg bg-red-100 flex items-center justify-center flex-shrink-0">
+                    <svg className="h-5 w-5 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-gray-900">graybulk-tie-up-agreement.pdf</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Standard vendor tie-up agreement · Gray Bulk Marketplace</p>
+                  </div>
+                  <a
+                    href="/graybulk-tie-up-agreement.pdf"
+                    download="graybulk-tie-up-agreement.pdf"
+                    className="flex items-center gap-2 rounded-xl bg-gray-900 text-white text-xs font-bold px-4 py-2.5 hover:bg-gray-800 transition-colors flex-shrink-0 cursor-pointer"
+                  >
+                    <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Download
+                  </a>
                 </div>
               </section>
 

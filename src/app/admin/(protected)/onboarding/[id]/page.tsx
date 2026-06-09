@@ -459,23 +459,47 @@ export default function OnboardingDetailPage({ params }: { params: Promise<{ id:
 
           {/* 10. Vendor Agreement */}
           <Section num="10" title="Vendor Tie-Up Agreement">
-            <div className="flex items-center gap-4 rounded-xl border border-gray-200 bg-gray-50 p-4 mb-4">
+            {/* Vendor-uploaded agreement */}
+            <div className="flex items-center gap-4 rounded-xl border border-gray-200 bg-gray-50 p-4 mb-3">
               <div className="h-12 w-12 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
                 <svg className="h-6 w-6 text-red-600" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/>
                 </svg>
               </div>
               <div className="flex-1 min-w-0">
+                <p className="text-xs text-gray-400 mb-0.5">Vendor-uploaded agreement</p>
                 <p className="font-semibold text-gray-900">{vendor.agreementFileName}</p>
-                <p className="text-sm text-gray-400 mt-0.5">{vendor.agreementSize} · Uploaded {vendor.agreementUploadedAt}</p>
-                <p className="text-xs text-gray-400 mt-0.5">By {vendor.contactName} during onboarding</p>
+                <p className="text-xs text-gray-400 mt-0.5">{vendor.agreementSize} · Uploaded {vendor.agreementUploadedAt} · By {vendor.contactName}</p>
               </div>
               <button
                 onClick={() => setAgreementModalOpen(true)}
                 className="rounded-xl bg-gray-900 text-white text-sm font-bold px-5 py-2.5 cursor-pointer hover:bg-gray-800 transition-colors flex-shrink-0"
               >
-                View Agreement
+                View
               </button>
+            </div>
+            {/* Gray Bulk standard tie-up agreement */}
+            <div className="flex items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 mb-4">
+              <div className="h-12 w-12 rounded-xl bg-gray-900 flex items-center justify-center flex-shrink-0">
+                <svg className="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/>
+                </svg>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs text-gray-400 mb-0.5">Gray Bulk standard agreement</p>
+                <p className="font-semibold text-gray-900">graybulk-tie-up-agreement.pdf</p>
+                <p className="text-xs text-gray-400 mt-0.5">Standard vendor tie-up agreement · Gray Bulk Marketplace</p>
+              </div>
+              <a
+                href="/graybulk-tie-up-agreement.pdf"
+                download="graybulk-tie-up-agreement.pdf"
+                className="flex items-center gap-2 rounded-xl bg-gray-900 text-white text-sm font-bold px-5 py-2.5 hover:bg-gray-800 transition-colors flex-shrink-0 cursor-pointer"
+              >
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download
+              </a>
             </div>
             <div className="grid grid-cols-2 gap-3">
               {[
