@@ -47,6 +47,12 @@ export default function AboutPage() {
       </div>
 
       <hr className="my-14 border-neutral-200" />
+
+      <div className="space-y-1 text-sm text-neutral-500 pb-8">
+        <p className="font-semibold text-neutral-700">Gray Cup Enterprises Private Limited</p>
+        <p>Harsha Bhawan, 4th Floor, 13/29 E-Block, Connaught Place, New Delhi – 110001</p>
+        <p>FF122, Rodeo Drive Mall, GT Road, TDI City, Kundli, Sonipat, Haryana – 131030</p>
+      </div>
     </div>
   );
 }

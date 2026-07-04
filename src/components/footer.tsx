@@ -135,7 +135,8 @@ export default function Footer() {
         </div>
         <div className="mt-10 pt-6 border-t border-border text-center text-sm text-muted-foreground space-y-1.5">
           <p>© {new Date().getFullYear()} Gray Cup Enterprises Private Limited. All rights reserved.</p>
-          <p>FF122, Rodeo Drive Mall, GT Road, TDI City, Kundli, Sonipat, Haryana – 131030, India</p>
+          <p>Harsha Bhawan, 4th Floor, 13/29 E-Block, Connaught Place, New Delhi – 110001</p>
+          <p>FF122, Rodeo Drive Mall, GT Road, TDI City, Kundli, Sonipat, Haryana – 131030</p>
           <p>CIN: U47211DL2025PTC457808 &nbsp;|&nbsp; GSTIN: 06AAMCG4985H1Z4</p>
         </div>
       </div>
