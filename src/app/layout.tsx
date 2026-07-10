@@ -55,6 +55,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Gray Bulk",
     description: "We provide better customer experience with knowledgebase",
+    siteName: "Gray Bulk",
     images: [
       {
         url: "/og.png",
@@ -90,6 +91,19 @@ export default function RootLayout({
           fontPublicSans.variable,
         )}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "@id": "https://graybulk.com/#website",
+              name: "Gray Bulk",
+              alternateName: "Gray Bulk by Gray Cup",
+              url: "https://graybulk.com",
+            }),
+          }}
+        />
         <RootProviders>{children}</RootProviders>
         {/* <ChatBotRandom /> */}
         <Analytics />
